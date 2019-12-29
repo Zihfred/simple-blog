@@ -9,3 +9,4 @@ export const errorVariant = 'error';
 export const maxWidth = 'sm';
 export const successFetchPosts = 'Posts successfully received';
 export const successFetchPost = 'Post successfully received';
+export const successCommentPost = 'Comment successfully received';

@@ -26,7 +26,6 @@ export const selectedPostsReducer = (state = initialState, action) => {
       };
     }
     case types.GET_SELECTED_POST_SUCCESS: {
-      console.log(action)
       return {
         ...state,
         title: action.payload.title,
@@ -35,6 +34,17 @@ export const selectedPostsReducer = (state = initialState, action) => {
         comments: action.payload.comments,
         loading: false,
         error: null
+      };
+    }
+    case types.POST_COMMENT_BY_ID_SUCCESS: {
+      const comments = [...state.comments];
+        comments.push({
+        postId: action.payload.id,
+        body: action.payload.body
+      });
+      return {
+        ...state,
+        comments: comments
       };
     }
     default:

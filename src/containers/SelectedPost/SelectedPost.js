@@ -3,14 +3,15 @@ import API from "./../../api/requests";
 import {
   getPostByIdError,
   getPostByIdRequest,
-  getPostsByIdSuccess
+  getPostsByIdSuccess,
+  postCommentByIdSuccess
 } from "./actions";
 import { connect } from "react-redux";
 import Header from "../../components/Header";
 import {
   errorVariant,
   headerTitle,
-  maxWidth,
+  maxWidth, successCommentPost,
   successDeletePost,
   successFetchPost,
   successVariant
@@ -20,6 +21,7 @@ import { useSnackbar } from "notistack";
 import Container from "@material-ui/core/Container";
 import OnePost from "../../components/OnePost";
 import { deletePost } from "../Posts/actions";
+import Comments from "./components/Comments";
 
 const SelectedPost = props => {
   const { enqueueSnackbar } = useSnackbar();
@@ -32,6 +34,7 @@ const SelectedPost = props => {
     getPostByIdRequest,
     getPostByIdError,
     getPostByIdSuccess,
+    postCommentByIdSuccess,
     history
   } = props;
 
@@ -42,26 +45,41 @@ const SelectedPost = props => {
         history.push(`/`);
         enqueueSnackbar(successDeletePost, { variant: successVariant });
         return res;
+        console.log('deleted')
       })
       .catch(err => {
         enqueueSnackbar(err.message, { variant: errorVariant });
       });
   };
 
-  const fetchPost = () => {
-    getPostByIdRequest(props.match.params.postid);
-    API.getPostById(props.match.params.postid)
-      .then(data => {
-        getPostByIdSuccess(data);
-        enqueueSnackbar(successFetchPost, { variant: successVariant });
+  const handlePostComment = (id, body) => {
+    API.postComment(id,body)
+      .then(res => {
+        console.log(id,body)
+        postCommentByIdSuccess({id,body});
+        enqueueSnackbar(successCommentPost, { variant: successVariant });
+        return res;
       })
-      .catch(error => {
-        getPostByIdError(error);
-        enqueueSnackbar(error.message, { variant: errorVariant });
+      .catch(err => {
+        enqueueSnackbar(err.message, { variant: errorVariant });
       });
   };
 
+
+
   useEffect(() => {
+    const fetchPost = () => {
+      getPostByIdRequest(props.match.params.postid);
+      API.getPostById(props.match.params.postid)
+        .then(data => {
+          getPostByIdSuccess(data);
+          enqueueSnackbar(successFetchPost, { variant: successVariant });
+        })
+        .catch(error => {
+          getPostByIdError(error);
+          enqueueSnackbar(error.message, { variant: errorVariant });
+        });
+    };
     fetchPost();
   }, []);
 
@@ -69,7 +87,6 @@ const SelectedPost = props => {
     <Container maxWidth={maxWidth}>
       <Header title={headerTitle} history={history} />
       <OnePost
-        isLoading
         title={title}
         body={body}
         id={id}
@@ -77,6 +94,7 @@ const SelectedPost = props => {
         deletePost={handleDelete}
         isLoading={loading}
       />
+      <Comments postComment={handlePostComment} postId={id} commentsList={comments}/>
     </Container>
   );
 };
@@ -94,7 +112,8 @@ const mapDispatchToProps = {
   getPostByIdRequest: getPostByIdRequest,
   getPostByIdError: getPostByIdError,
   deletePost: deletePost,
-  getPostByIdSuccess: getPostsByIdSuccess
+  getPostByIdSuccess: getPostsByIdSuccess,
+  postCommentByIdSuccess: postCommentByIdSuccess
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectedPost);

@@ -1,4 +1,4 @@
-import { url, posts, comments } from "./constants";
+import { url, posts, comments, postComments } from "./constants";
 
 class API {
   getAllPosts = async () =>
@@ -21,6 +21,17 @@ class API {
         return res.json();
       }
     });
+
+  postComment = async (id, body) => {
+    console.log(id,body)
+    return fetch(`${url}${postComments}`, {
+      headers: {
+        'content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({"postId": id, body})
+    });
+  }
 }
 
 export default new API();
