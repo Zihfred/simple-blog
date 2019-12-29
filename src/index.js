@@ -1,12 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import Posts from "./containers/Posts";
+import configureStore from "./store";
+import { SnackbarProvider } from "notistack";
+import SelectedPost from "./containers/SelectedPost";
+const store = configureStore();
 
-ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(
+  <BrowserRouter>
+    <SnackbarProvider maxSnack={3} autoHideDuration={2000}>
+      <Provider store={store}>
+        <Route exact path="/" component={Posts} />
+        <Route path="/posts/:postid" component={SelectedPost} />
+      </Provider>
+    </SnackbarProvider>
+  </BrowserRouter>,
+  document.getElementById("root")
+);

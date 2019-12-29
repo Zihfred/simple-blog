@@ -1,0 +1,42 @@
+import types from "./actionTypes";
+
+const initialState = {
+  posts: [],
+  loading: false,
+  error: null
+};
+
+export const postsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case types.GET_ALL_POSTS_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: false
+      };
+    }
+    case types.GET_ALL_POSTS_ERROR: {
+      return {
+        ...state,
+        error: true,
+        loading: false
+      };
+    }
+    case types.GET_ALL_POSTS_SUCCESS: {
+      return {
+        ...state,
+        posts: action.payload,
+        loading: false,
+        error: null
+      };
+    }
+    case types.DELETE_SELECTED_POST_SUCCESS:{
+      return {
+        ...state,
+        posts: state.posts.filter(post => post.id !== action.payload)
+      }
+    }
+    default:
+      return { ...state };
+  }
+};
