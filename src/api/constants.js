@@ -1,4 +1,4 @@
-export const url = 'https://simple-blog-api.crew.red/';
+export const url = 'https://bloggy-api.herokuapp.com/';
 
 export const posts = 'posts';
 

@@ -5,15 +5,16 @@ import Button from "@material-ui/core/Button";
 
 const AddComment = ({ postComment, postId }) => {
   const [commentText, setCommentText] = useState("");
-  const handlePostComment = (e) =>{
+  const handlePostComment = () =>{
     postComment(postId, commentText)
-    setCommentText('');
+    setCommentText("");
   }
   return (
     <StyledPaper>
       <StyledTextField
         multiline={true}
         variant="outlined"
+        value={commentText}
         onChange={e => setCommentText(e.target.value)}
         rows={2}
       />
