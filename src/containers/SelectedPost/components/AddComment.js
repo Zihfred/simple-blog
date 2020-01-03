@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import { Paper, TextField } from "@material-ui/core";
-import styled from "styled-components";
-import Button from "@material-ui/core/Button";
+import React, { useState } from 'react';
+import { Paper, TextField } from '@material-ui/core';
+import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
 
 const AddComment = ({ postComment, postId }) => {
-  const [commentText, setCommentText] = useState("");
-  const handlePostComment = () =>{
-    postComment(postId, commentText)
-    setCommentText("");
-  }
+  const [commentText, setCommentText] = useState('');
+  const handlePostComment = () => {
+    postComment(postId, commentText);
+    setCommentText('');
+  };
   return (
     <StyledPaper>
       <StyledTextField
-        multiline={true}
+        multiline
         variant="outlined"
         value={commentText}
-        onChange={e => setCommentText(e.target.value)}
+        onChange={(e) => setCommentText(e.target.value)}
         rows={2}
       />
       <StyledButton onClick={handlePostComment}>Send</StyledButton>
@@ -37,8 +37,6 @@ const StyledTextField = styled(TextField)`
 const StyledButton = styled(Button)`
   height: 50%;
 `;
-
-
 
 
 export default AddComment;

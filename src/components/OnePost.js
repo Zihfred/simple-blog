@@ -1,16 +1,18 @@
-import React from "react";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import styled from "styled-components";
-import { cutText } from "./helpers";
-import { deletePostText, readFull, shortArticleLength} from "./constants";
-import Spinner from "./Spinner";
+import React from 'react';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import styled from 'styled-components';
+import { cutText } from './helpers';
+import { deletePostText, readFull, shortArticleLength } from './constants';
+import Spinner from './Spinner';
 
-const onePost = ({ title = "null", body = "null", id, deletePost, isFull, readMore, isLoading }) => {
-  if(isLoading) return <Spinner/>
+const onePost = ({
+  title = 'null', body = 'null', id, deletePost, isFull, readMore, isLoading,
+}) => {
+  if (isLoading) return <Spinner />;
   return (
     <StyledCard>
       <CardContent>
@@ -22,10 +24,12 @@ const onePost = ({ title = "null", body = "null", id, deletePost, isFull, readMo
         </StyledBody>
       </CardContent>
       <CardActions>
-        {isFull ? null :<Button size="small" onClick={()=>readMore(id)}>{readFull}</Button> }
-        {!isFull ? null :<Button size="small" onClick={() => deletePost(id)}>
-          {deletePostText}
-        </Button>}
+        {isFull ? null : <Button size="small" onClick={() => readMore(id)}>{readFull}</Button> }
+        {!isFull ? null : (
+          <Button size="small" onClick={() => deletePost(id)}>
+            {deletePostText}
+          </Button>
+        )}
       </CardActions>
     </StyledCard>
   );

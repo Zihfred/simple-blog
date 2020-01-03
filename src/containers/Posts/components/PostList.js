@@ -1,22 +1,25 @@
-import React from "react";
-import OnePost from "../../../components/OnePost";
-import styled from 'styled-components'
-import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Spinner from "../../../components/Spinner";
+import React from 'react';
+import styled from 'styled-components';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import OnePost from '../../../components/OnePost';
+import Spinner from '../../../components/Spinner';
 
-const PostList = ({ posts, deletePost, isLoading, readMore }) => {
-  if (isLoading)
+const PostList = ({
+  posts, deletePost, isLoading, readMore,
+}) => {
+  if (isLoading) {
     return (
-      <Spinner/>
+      <Spinner />
     );
+  }
   return (
     <>
       <Typography variant="h3" component="h2" align="center">
         Posts List:
       </Typography>
-      {posts &&
-        posts.map(post => (
+      {posts
+        && posts.map((post) => (
           <OnePost
             isFull={false}
             key={post.id}

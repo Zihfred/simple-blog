@@ -1,11 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import Posts from "./containers/Posts";
-import configureStore from "./store";
-import { SnackbarProvider } from "notistack";
-import SelectedPost from "./containers/SelectedPost";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { SnackbarProvider } from 'notistack';
+import Posts from './containers/Posts';
+import configureStore from './store';
+import SelectedPost from './containers/SelectedPost';
+
 const store = configureStore();
 
 ReactDOM.render(
@@ -17,5 +18,5 @@ ReactDOM.render(
       </Provider>
     </SnackbarProvider>
   </BrowserRouter>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );

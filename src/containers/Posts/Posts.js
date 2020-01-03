@@ -1,47 +1,49 @@
-import React, { useEffect } from "react";
-import API from "./../../api/requests";
-import { getPostsError, getPostsRequest, getPostsSuccess } from "./actions";
-import { connect } from "react-redux";
-import PostList from "./components/PostList";
-import { Container } from "@material-ui/core";
-import Header from "../../components/Header";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Container } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
+import P from 'prop-types';
+import { getPosts } from './actions';
 import {
   errorVariant,
   headerTitle,
   maxWidth,
-  successDeletePost,
   successFetchPosts,
-  successVariant
-} from "../../components/constants";
-import { useSnackbar } from "notistack";
+  successVariant,
+  errorFetchText,
+} from '../../components/constants';
 
-const Posts = props => {
+import PostList from './components/PostList';
+import Header from '../../components/Header';
+
+const Posts = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const {
     loading,
-    getPostsError,
-    getPostsRequest,
-    getPostsSuccess,
+    fetchData,
+    error,
     posts,
-    history
+    history,
   } = props;
 
-  const handleReadMore = id => {
+  const handleReadMore = (id) => {
     history.push(`posts/${id}`);
   };
 
   const fetchPosts = () => {
-    getPostsRequest();
-    API.getAllPosts()
-      .then(data => {
-        getPostsSuccess(data);
-        enqueueSnackbar(successFetchPosts, { variant: successVariant });
-      })
-      .catch(error => {
-        getPostsError(error);
-        enqueueSnackbar(error.message, { variant: errorVariant });
-      });
+    fetchData();
   };
+  const notifications = () => {
+    if (error) {
+      enqueueSnackbar(errorFetchText, { variant: errorVariant });
+    }
+    if (posts.length) {
+      enqueueSnackbar(successFetchPosts, { variant: successVariant });
+    }
+  };
+  useEffect(() => {
+    notifications();
+  }, [error, posts]);
 
   useEffect(() => {
     fetchPosts();
@@ -60,17 +62,26 @@ const Posts = props => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   posts: state.postsReducer.posts,
   loading: state.postsReducer.loading,
-  error: state.postsReducer.error
+  error: state.postsReducer.error,
 });
 
 const mapDispatchToProps = {
-  getPostsSuccess: getPostsSuccess,
+  fetchData: getPosts,
+};
 
-  getPostsError: getPostsError,
-  getPostsRequest: getPostsRequest
+Posts.propTypes = {
+  posts: P.arrayOf(P.object).isRequired,
+  loading: P.bool.isRequired,
+  error: P.bool.isRequired,
+  history: P.objectOf(P.object),
+  fetchData: P.func.isRequired,
+};
+
+Posts.defaultProps = {
+  history: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

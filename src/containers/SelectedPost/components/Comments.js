@@ -1,24 +1,22 @@
-import React from "react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import styled from "styled-components";
-import { Paper } from "@material-ui/core";
-import AddComment from "./AddComment";
+import React from 'react';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import styled from 'styled-components';
+import { Paper } from '@material-ui/core';
+import AddComment from './AddComment';
 
-const Comments = ({ commentsList,postComment, postId }) => {
-  return (
-    <Paper>
-      <AddComment postComment={postComment} postId={postId} />
-      {commentsList.length && (
-        <StyledListItem alignItems="flex-start">
-          {commentsList.map(comment => (
-            <StyledListItemText primary={comment.body} />
-          ))}
-        </StyledListItem>
-      )}
-    </Paper>
-  );
-};
+const Comments = ({ commentsList, postComment, postId }) => (
+  <Paper>
+    <AddComment postComment={postComment} postId={postId} />
+    {commentsList.length > 0 && (
+    <StyledListItem alignItems="flex-start">
+      {commentsList.map((comment) => (
+        <StyledListItemText key={comment.id} primary={comment.body} />
+      ))}
+    </StyledListItem>
+    )}
+  </Paper>
+);
 
 const StyledListItem = styled(ListItem)`
   flex-direction: column;

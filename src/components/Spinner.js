@@ -1,11 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import React from 'react';
+import styled from 'styled-components';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const Spinner = () =>
+const Spinner = () => (
   <LoadingWrapper>
-     <CircularProgress />
+    <CircularProgress />
   </LoadingWrapper>
+);
 const LoadingWrapper = styled.div`
   text-align: center;
 `;

@@ -1,9 +1,9 @@
-import types from "./actionTypes";
+import types from './actionTypes';
 
 const initialState = {
   posts: [],
   loading: false,
-  error: null
+  error: null,
 };
 
 export const postsReducer = (state = initialState, action) => {
@@ -12,14 +12,13 @@ export const postsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: false
+        error: false,
       };
     }
     case types.GET_ALL_POSTS_ERROR: {
       return {
         ...state,
         error: true,
-        loading: false
       };
     }
     case types.GET_ALL_POSTS_SUCCESS: {
@@ -27,14 +26,14 @@ export const postsReducer = (state = initialState, action) => {
         ...state,
         posts: action.payload,
         loading: false,
-        error: null
+        error: false,
       };
     }
-    case types.DELETE_SELECTED_POST_SUCCESS:{
+    case types.DELETE_SELECTED_POST_SUCCESS: {
       return {
         ...state,
-        posts: state.posts.filter(post => post.id !== action.payload)
-      }
+        posts: state.posts.filter((post) => post.id !== action.payload),
+      };
     }
     default:
       return { ...state };

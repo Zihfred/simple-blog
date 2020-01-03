@@ -1,4 +1,4 @@
-import types from "./actionTypes";
+import types from './actionTypes';
 
 const initialState = {
   title: null,
@@ -6,7 +6,7 @@ const initialState = {
   id: null,
   comments: [],
   loading: false,
-  error: null
+  error: null,
 };
 
 export const selectedPostsReducer = (state = initialState, action) => {
@@ -15,14 +15,14 @@ export const selectedPostsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: false
+        error: false,
       };
     }
     case types.GET_SELECTED_POST_ERROR: {
       return {
         ...state,
         loading: false,
-        error: true
+        error: true,
       };
     }
     case types.GET_SELECTED_POST_SUCCESS: {
@@ -33,18 +33,18 @@ export const selectedPostsReducer = (state = initialState, action) => {
         id: action.payload.id,
         comments: action.payload.comments,
         loading: false,
-        error: null
+        error: null,
       };
     }
     case types.POST_COMMENT_BY_ID_SUCCESS: {
       const comments = [...state.comments];
-        comments.push({
+      comments.push({
         postId: action.payload.id,
-        body: action.payload.body
+        body: action.payload.body,
       });
       return {
         ...state,
-        comments: comments
+        comments,
       };
     }
     default:

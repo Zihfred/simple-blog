@@ -1,29 +1,26 @@
-import React, { useEffect } from "react";
-import API from "./../../api/requests";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useSnackbar } from 'notistack';
+import Container from '@material-ui/core/Container';
+import P from 'prop-types';
+import API from '../../api/requests';
 import {
-  getPostByIdError,
-  getPostByIdRequest,
-  getPostsByIdSuccess,
-  postCommentByIdSuccess
-} from "./actions";
-import { connect } from "react-redux";
-import Header from "../../components/Header";
+  getPostById,
+  postCommentById,
+} from './actions';
+import Header from '../../components/Header';
 import {
   errorVariant,
   headerTitle,
-  maxWidth, successCommentPost,
+  maxWidth,
   successDeletePost,
-  successFetchPost,
-  successVariant
-} from "../../components/constants";
+  successVariant,
+} from '../../components/constants';
 
-import { useSnackbar } from "notistack";
-import Container from "@material-ui/core/Container";
-import OnePost from "../../components/OnePost";
-import { deletePost } from "../Posts/actions";
-import Comments from "./components/Comments";
+import OnePost from '../../components/OnePost';
+import Comments from './components/Comments';
 
-const SelectedPost = props => {
+const SelectedPost = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const {
     title,
@@ -31,56 +28,31 @@ const SelectedPost = props => {
     id,
     comments,
     loading,
-    getPostByIdRequest,
-    getPostByIdError,
-    getPostByIdSuccess,
-    postCommentByIdSuccess,
-    history
+    history,
+    getPostById,
+    postCommentById,
   } = props;
 
-  const handleDelete = id => {
+  const handleDelete = () => {
     API.deletePost(id)
-      .then(res => {
-        deletePost(id);
-        history.push(`/`);
+      .then((res) => {
+        history.push('/');
         enqueueSnackbar(successDeletePost, { variant: successVariant });
         return res;
-        console.log('deleted')
       })
-      .catch(err => {
+      .catch((err) => {
         enqueueSnackbar(err.message, { variant: errorVariant });
       });
   };
 
-  const handlePostComment = (id, body) => {
-    API.postComment(id,body)
-      .then(res => {
-        console.log(id,body)
-        postCommentByIdSuccess({id,body});
-        enqueueSnackbar(successCommentPost, { variant: successVariant });
-        return res;
-      })
-      .catch(err => {
-        enqueueSnackbar(err.message, { variant: errorVariant });
-      });
+  const handlePostComment = (postId, commentBody) => {
+    postCommentById(postId, commentBody);
   };
-
 
 
   useEffect(() => {
-    const fetchPost = () => {
-      getPostByIdRequest(props.match.params.postid);
-      API.getPostById(props.match.params.postid)
-        .then(data => {
-          getPostByIdSuccess(data);
-          enqueueSnackbar(successFetchPost, { variant: successVariant });
-        })
-        .catch(error => {
-          getPostByIdError(error);
-          enqueueSnackbar(error.message, { variant: errorVariant });
-        });
-    };
-    fetchPost();
+    // eslint-disable-next-line react/prop-types
+    getPostById(props.match.params.postid);
   }, []);
 
   return (
@@ -90,30 +62,46 @@ const SelectedPost = props => {
         title={title}
         body={body}
         id={id}
-        isFull={true}
+        isFull
         deletePost={handleDelete}
         isLoading={loading}
       />
-      <Comments postComment={handlePostComment} postId={id} commentsList={comments}/>
+      <Comments postComment={handlePostComment} postId={id} commentsList={comments} />
     </Container>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   title: state.selectedPostsReducer.title,
   body: state.selectedPostsReducer.body,
   id: state.selectedPostsReducer.id,
   comments: state.selectedPostsReducer.comments,
   loading: state.selectedPostsReducer.loading,
-  error: state.selectedPostsReducer.error
+  error: state.selectedPostsReducer.error,
 });
 
 const mapDispatchToProps = {
-  getPostByIdRequest: getPostByIdRequest,
-  getPostByIdError: getPostByIdError,
-  deletePost: deletePost,
-  getPostByIdSuccess: getPostsByIdSuccess,
-  postCommentByIdSuccess: postCommentByIdSuccess
+  getPostById,
+  postCommentById,
+};
+
+SelectedPost.propTypes = {
+  getPostById: P.func.isRequired,
+  postCommentById: P.func.isRequired,
+  title: P.string,
+  body: P.string,
+  id: P.number,
+  comments: P.arrayOf(P.object),
+  loading: P.bool.isRequired,
+  // eslint-disable-next-line react/require-default-props,react/forbid-prop-types
+  history: P.object,
+};
+
+SelectedPost.defaultProps = {
+  comments: [],
+  title: null,
+  body: null,
+  id: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectedPost);

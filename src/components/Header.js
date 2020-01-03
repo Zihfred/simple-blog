@@ -1,15 +1,16 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import styled from "styled-components";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import styled from 'styled-components';
+
 const Header = ({ title, history }) => {
-  const handleBack = () => history.push("/");
+  const handleBack = () => history.push('/');
 
   return (
     <HeaderWrapper>
       {history && (
         <Button variant="outlined" onClick={handleBack}>
-          {"Go back"}
+          Go back
         </Button>
       )}
       <Typography variant="h1" component="h2" align="center">
