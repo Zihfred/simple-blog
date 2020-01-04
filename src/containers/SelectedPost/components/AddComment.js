@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Paper, TextField } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
+
+import P from 'prop-types';
 
 const AddComment = ({ postComment, postId }) => {
   const [commentText, setCommentText] = useState('');
@@ -38,5 +39,13 @@ const StyledButton = styled(Button)`
   height: 50%;
 `;
 
+AddComment.propTypes = {
+  postComment: P.func.isRequired,
+  postId: P.number,
+};
+
+AddComment.defaultProps = {
+  postId: null,
+};
 
 export default AddComment;

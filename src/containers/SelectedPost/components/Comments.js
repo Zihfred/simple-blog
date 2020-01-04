@@ -3,7 +3,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import styled from 'styled-components';
 import { Paper } from '@material-ui/core';
+import P from 'prop-types';
 import AddComment from './AddComment';
+
 
 const Comments = ({ commentsList, postComment, postId }) => (
   <Paper>
@@ -11,7 +13,7 @@ const Comments = ({ commentsList, postComment, postId }) => (
     {commentsList.length > 0 && (
     <StyledListItem alignItems="flex-start">
       {commentsList.map((comment) => (
-        <StyledListItemText key={comment.id} primary={comment.body} />
+        <StyledListItemText key={comment.body + comment.id} primary={comment.body} />
       ))}
     </StyledListItem>
     )}
@@ -30,5 +32,17 @@ const StyledListItemText = styled(ListItemText)`
     border-bottom: 1px solid black;
   }
 `;
+
+Comments.propTypes = {
+  commentsList: P.arrayOf(P.object),
+  postComment: P.func,
+  postId: P.number,
+};
+
+Comments.defaultProps = {
+  commentsList: null,
+  postComment: () => {},
+  postId: () => {},
+};
 
 export default Comments;

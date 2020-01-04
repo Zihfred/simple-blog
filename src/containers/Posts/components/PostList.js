@@ -1,9 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import P from 'prop-types';
 import OnePost from '../../../components/OnePost';
 import Spinner from '../../../components/Spinner';
+
 
 const PostList = ({
   posts, deletePost, isLoading, readMore,
@@ -34,8 +34,16 @@ const PostList = ({
   );
 };
 
-const LoadingWrapper = styled.div`
-  text-align: center;
-`;
+PostList.propTypes = {
+  posts: P.arrayOf(P.object).isRequired,
+  deletePost: P.func,
+  isLoading: P.bool.isRequired,
+  readMore: P.func,
+};
+
+PostList.defaultProps = {
+  readMore: null,
+  deletePost: null,
+};
 
 export default PostList;

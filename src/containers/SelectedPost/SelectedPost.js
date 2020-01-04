@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import Container from '@material-ui/core/Container';
 import P from 'prop-types';
+// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
 import API from '../../api/requests';
 import {
   getPostById,

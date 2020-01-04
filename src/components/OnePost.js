@@ -5,12 +5,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
+import P from 'prop-types';
 import { cutText } from './helpers';
 import { deletePostText, readFull, shortArticleLength } from './constants';
 import Spinner from './Spinner';
 
+
 const onePost = ({
-  title = 'null', body = 'null', id, deletePost, isFull, readMore, isLoading,
+  title, body, id, deletePost, isFull, readMore, isLoading,
 }) => {
   if (isLoading) return <Spinner />;
   return (
@@ -42,4 +44,25 @@ const StyledCard = styled(Card)`
 const StyledBody = styled(Typography)`
   word-break: break-word;
 `;
+
+onePost.propTypes = {
+  title: P.string,
+  body: P.string,
+  id: P.number,
+  deletePost: P.func,
+  isFull: P.bool,
+  readMore: P.func,
+  isLoading: P.bool,
+};
+
+onePost.defaultProps = {
+  title: '',
+  body: '',
+  id: null,
+  deletePost: P.func,
+  isFull: false,
+  readMore: null,
+  isLoading: false,
+};
+
 export default onePost;

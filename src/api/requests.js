@@ -24,7 +24,6 @@ class API {
     });
 
   postComment = async (id, body) => {
-    console.log(id,body)
     return fetch(`${url}${postComments}`, {
       headers: {
         'content-Type': 'application/json'

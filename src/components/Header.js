@@ -3,6 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 
+import P from 'prop-types';
+
 const Header = ({ title, history }) => {
   const handleBack = () => history.push('/');
 
@@ -23,5 +25,16 @@ const Header = ({ title, history }) => {
 const HeaderWrapper = styled.div`
   align-items: baseline;
 `;
+
+Header.propTypes = {
+  title: P.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  history: P.object,
+};
+
+Header.defaultProps = {
+  title: '',
+  history: null,
+};
 
 export default Header;

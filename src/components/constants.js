@@ -1,5 +1,4 @@
 export const headerTitle = 'Test Task';
-export const postsList = 'Posts List:';
 export const shortArticleLength = 150; // size of closed article
 export const readFull = 'read full';
 export const deletePostText = 'delete post';
@@ -9,5 +8,3 @@ export const errorVariant = 'Error';
 export const errorFetchText = 'Error fetching data!';
 export const maxWidth = 'sm';
 export const successFetchPosts = 'Posts successfully received';
-export const successFetchPost = 'Post successfully received';
-export const successCommentPost = 'Comment successfully received';

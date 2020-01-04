@@ -75,13 +75,15 @@ const mapDispatchToProps = {
 Posts.propTypes = {
   posts: P.arrayOf(P.object).isRequired,
   loading: P.bool.isRequired,
-  error: P.bool.isRequired,
-  history: P.objectOf(P.object),
+  error: P.bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  history: P.object,
   fetchData: P.func.isRequired,
 };
 
 Posts.defaultProps = {
   history: null,
+  error: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

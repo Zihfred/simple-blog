@@ -1,4 +1,5 @@
 import types from './actionTypes';
+// eslint-disable-next-line import/no-named-as-default
 import API from '../../api/requests';
 
 export const getPostsRequest = () => ({
